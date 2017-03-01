@@ -15,8 +15,13 @@ function hexToAscii(hex) {
  */
 function asciiToHex(ascii) {
     let hex = '';
-    for (let i = 0; i < ascii.length; ++i)
-        hex += ascii.charCodeAt(i).toString(16);
+    for (let i = 0; i < ascii.length; ++i) {
+        let h = ascii.charCodeAt(i).toString(16);
+        if (h === '0') {
+            h = '00';
+        }
+        hex += h;
+    }
     return hex;
 }
 
@@ -28,7 +33,11 @@ function xor(c1, c2) {
     while (c1.length > 0 && c2.length > 0) {
         const a = parseInt(_.join(_.take(c1, 2), ''), 16);
         const b = parseInt(_.join(_.take(c2, 2), ''), 16);
-        result += (a ^ b).toString(16);
+        let xorValue = (a ^ b).toString(16);
+        if (xorValue.length == 1) {
+            xorValue = '0' + xorValue;
+        }
+        result += xorValue;
         c1 = _.drop(c1, 2);
         c2 = _.drop(c2, 2);
     }
@@ -45,18 +54,18 @@ function decrypt(key, cipherText) {
 }
 
 function breakIt(c1, c2, c) {
-    const key = asciiToHex('the');
-    console.log(c);
+    const key = asciiToHex(' next produc');
+    const matches = [];
     for (let i = 0; i < c.length - key.length; i += 2) {
         const sub = c.substring(i, i + key.length);
         const d = decrypt(key, sub);
 
         if (d.match(/^[a-zA-Z ]*$/)) {
-            console.log(_.padEnd(_.padStart(d, i, '.'), c.length, '.'));
+            matches.push(_.padEnd(_.padStart(d, (i/2) + d.length, '.'), c.length / 2, '.'));
         }
     }
 
-    return decrypt(asciiToHex(key), c);
+    return matches;
 }
 
 module.exports = {

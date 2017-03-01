@@ -1,5 +1,6 @@
 const fs = require('fs');
 const readline = require('readline');
+const _ = require('lodash');
 const otp = require('./otp');
 
 /**
@@ -31,7 +32,12 @@ function processCipherTexts(cipherTexts) {
         for (let j = i + 1; j < cipherTexts.length; ++j) {
             const b = cipherTexts[j];
             const m1m2 = otp.xor(a, b); // we get back here the 2 original messages xor-ed
-            console.log(otp.breakIt(a, b, m1m2));
+            const matches = otp.breakIt(a, b, m1m2);
+            if(matches.length > 0) {
+                console.log(`(${i+1}, ${j+1})`);
+                console.log(m1m2);
+                _.forEach(matches, match => console.log(match));
+            }
         }
     }
 }
