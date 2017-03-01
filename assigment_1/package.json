@@ -1,0 +1,17 @@
+{
+  "name": "assigment_1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "4.17.4"
+  },
+  "devDependencies": {
+    "babel-register": "6.23.0",
+    "jasmine-es6": "0.4.0"
+  }
+}
