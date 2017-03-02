@@ -54,13 +54,14 @@ function decrypt(key, cipherText) {
 }
 
 function breakIt(c1, c2, c) {
-    const key = asciiToHex(' next produc');
+    const key = asciiToHex('we can see the point where the chip is unhappy if a wrong bit is sent and consumes more power from the environment - Adi Shamir');
+    // const key = asciiToHex('rh solving core');
     const matches = [];
     for (let i = 0; i < c.length - key.length; i += 2) {
         const sub = c.substring(i, i + key.length);
         const d = decrypt(key, sub);
 
-        if (d.match(/^[a-zA-Z ]*$/)) {
+        if (d.match(/^[a-zA-Z0-9)(\-:.,' ]*$/)) {
             matches.push(_.padEnd(_.padStart(d, (i/2) + d.length, '.'), c.length / 2, '.'));
         }
     }
